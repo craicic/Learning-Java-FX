@@ -7,11 +7,11 @@
     <groupId>me.vaalp</groupId>
     <artifactId>LearningJavaFX</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Learning Java FX</name>
+    <name>Learning JavaFX</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.7.1</junit.version>
+        <junit.version>5.8.2</junit.version>
     </properties>
 
     <dependencies>
@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>me.vaalp.learningjavafx/me.vaalp.learningjavafx.HelloApplication</mainClass>
+                            <mainClass>me.vaalp.learningjavafx/me.vaalp.learningjavafx.MainApplication</mainClass>
                         </configuration>
                     </execution>
                 </executions>
