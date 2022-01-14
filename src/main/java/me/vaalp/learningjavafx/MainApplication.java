@@ -1,19 +1,24 @@
 package me.vaalp.learningjavafx;
 
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.util.concurrent.RecursiveAction;
 
 public class MainApplication extends javafx.application.Application {
 
+    private boolean onStopButtonPressed;
 
     public static void main(String[] args) {
         launch(args);
@@ -22,47 +27,62 @@ public class MainApplication extends javafx.application.Application {
     @Override
     public void start(Stage stage) {
         Group root = new Group();
-        Scene scene = new Scene(root, 600,600, Color.GRAY);
+        Scene scene = new Scene(root, 800, 600, Color.GRAY);
         Image icon = new Image("icon.png");
-        stage.setTitle("Stage Demo Program");
+        stage.setTitle("Transform Shape Program");
         stage.getIcons().add(icon);
 
-        Text text = new Text();
-        text.setText("WHOOOOOOO!!!");
-        text.setX(50);
-        text.setY(50);
-        text.setFont(Font.font("Consolas",50));
-        text.setFill(Color.GOLD);
-
-        Line line = new Line();
-        line.setStartX(200);
-        line.setStartY(200);
-        line.setEndX(500);
-        line.setEndY(500);
-        line.setStrokeWidth(5);
-        line.setStroke(Color.WHITE);
-        line.setRotate(45);
-
         Rectangle rectangle = new Rectangle();
-        rectangle.setX(150);
-        rectangle.setY(50);
-        rectangle.setWidth(150);
-        rectangle.setHeight(250);
+        rectangle.setX(400);
+        rectangle.setY(290);
+        rectangle.setWidth(50);
+        rectangle.setHeight(20);
         rectangle.setFill(Color.GOLD);
         rectangle.setStrokeWidth(5);
 
+
+        KeyValue kv = new KeyValue(rectangle.rotateProperty(), 360);
+
+        Button button1 = new Button("Rotate shape");
+        button1.setOnAction(event -> { rotate(rectangle);});
+
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        Timeline timeline = new Timeline(kf);
+
+        Button button2 = new Button("Letzgoo !");
+
+        button2.setOnAction(event -> {
+            timeline.play();
+        });
+
+
+
+        Button button3 = new Button("Stop this madness !");
+        button3.setOnAction(event -> { timeline.stop();});
+
+        button2.setLayoutX(100.0 );
+
+        button3.setLayoutX(200.0);
+
         Polygon triangle = new Polygon();
         triangle.getPoints().setAll(
-                200.0,200.0,
-                300.0,300.0,
-                350.0,400.0);
+                200.0, 200.0,
+                300.0, 300.0,
+                350.0, 400.0);
         triangle.setFill(Color.DARKGREEN);
 
-        root.getChildren().add(triangle);
-        root.getChildren().add(text);
-        root.getChildren().add(line);
         root.getChildren().add(rectangle);
+        root.getChildren().add(button1);
+        root.getChildren().add(button2);
+        root.getChildren().add(button3);
+
         stage.setScene(scene);
         stage.show();
+
+
+    }
+
+    private void rotate(Rectangle box) {
+        box.setRotate(box.getRotate() + 15);
     }
 }
