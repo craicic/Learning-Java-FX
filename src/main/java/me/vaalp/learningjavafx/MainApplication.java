@@ -44,23 +44,20 @@ public class MainApplication extends javafx.application.Application {
         KeyValue kv = new KeyValue(rectangle.rotateProperty(), 360);
 
         Button button1 = new Button("Rotate shape");
-        button1.setOnAction(event -> { rotate(rectangle);});
+        button1.setOnAction(event -> rotate(rectangle));
 
         KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
         Timeline timeline = new Timeline(kf);
 
         Button button2 = new Button("Letzgoo !");
 
-        button2.setOnAction(event -> {
-            timeline.play();
-        });
-
+        button2.setOnAction(event -> timeline.play());
 
 
         Button button3 = new Button("Stop this madness !");
-        button3.setOnAction(event -> { timeline.stop();});
+        button3.setOnAction(event -> timeline.stop());
 
-        button2.setLayoutX(100.0 );
+        button2.setLayoutX(100.0);
 
         button3.setLayoutX(200.0);
 
