@@ -8,17 +8,16 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.concurrent.RecursiveAction;
-
 public class MainApplication extends javafx.application.Application {
 
-    private boolean onStopButtonPressed;
 
     public static void main(String[] args) {
         launch(args);
@@ -41,25 +40,35 @@ public class MainApplication extends javafx.application.Application {
         rectangle.setStrokeWidth(5);
 
 
-        KeyValue kv = new KeyValue(rectangle.rotateProperty(), 360);
+        KeyValue kv = new KeyValue(rectangle.rotateProperty(), rectangle.getRotate() + 1440.0);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1.0), kv);
+        Timeline timeline = new Timeline(kf);
+
+        timeline.setOnFinished(event -> rectangle.setRotate(0));
 
         Button button1 = new Button("Rotate shape");
         button1.setOnAction(event -> rotate(rectangle));
 
-        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
-        Timeline timeline = new Timeline(kf);
-
-        Button button2 = new Button("Letzgoo !");
-
+        Button button2 = new Button("Let's GO !");
         button2.setOnAction(event -> timeline.play());
 
-
         Button button3 = new Button("Stop this madness !");
-        button3.setOnAction(event -> timeline.stop());
+        button3.setOnAction(event -> {
+                    timeline.stop();
+                    rectangle.setRotate(0);
+                }
+        );
 
-        button2.setLayoutX(100.0);
+        Text marker = new Text(String.valueOf(timeline.getCycleCount()));
 
-        button3.setLayoutX(200.0);
+        HBox hbox = new HBox();
+        hbox.getChildren().add(button1);
+        hbox.getChildren().add(button2);
+        hbox.getChildren().add(button3);
+        hbox.getChildren().add(marker);
+
+        hbox.setSpacing(20.0);
+
 
         Polygon triangle = new Polygon();
         triangle.getPoints().setAll(
@@ -69,13 +78,10 @@ public class MainApplication extends javafx.application.Application {
         triangle.setFill(Color.DARKGREEN);
 
         root.getChildren().add(rectangle);
-        root.getChildren().add(button1);
-        root.getChildren().add(button2);
-        root.getChildren().add(button3);
+        root.getChildren().add(hbox);
 
         stage.setScene(scene);
         stage.show();
-
 
     }
 
